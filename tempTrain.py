@@ -21,7 +21,6 @@ search_form.click()
 
 """
 driver.find_element_by_xpath('id("projectsDropzone10261")/a[@class="btn btn-green create"]')
-
 driver.get('https://frondage.com/logout')
 driver.close()
 driver.quit()
