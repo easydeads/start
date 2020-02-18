@@ -1,18 +1,24 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-import random
 import urllib.request
+from selenium import webdriver
+#from selenium.webdriver.common.keys import Keys
+#import random
 
 linux_driver_path = ""
 win_driver_path = "geckodriver-v0.24.0-win64/geckodriver.exe"
 
 driver = webdriver.Firefox(executable_path=win_driver_path)
 
-def go_to(addr, title):
+def go_to(addr, title="Not have"):
     driver.get(addr)
-    print("url: " + str(addr) + "\n" +
-          str(driver.title))
-    assert title in driver.title
+    print("url: " + str(addr) + " title: " + str(driver.title))
+    if title == "Not have":
+        print("Title not have")
+    elif title != "Not have":
+        list_title = title.split()
+        print(list_title[0])
+        assert list_title[0] in driver.title
+    else:
+        assert title.split() in driver.title
 
 def find_copy(where_is):
     elem = driver.find_element_by_xpath(where_is)
@@ -54,7 +60,7 @@ mail_get_button = "/html[1]/body[1]/center[1]/div[1]/div[1]/div[3]/table[3]/tbod
 
 #cat resources
 cat_url = "https://random.cat/"
-cat_title = "random.cat -- meeeeeeeeoooooooow"
+cat_title = "random.cat"
 cat_xpath = "//img[@id='cat']"
 
 #dog resources
