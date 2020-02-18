@@ -7,7 +7,7 @@ opts.headless = True
 #opts.set_headless()
 assert opts.headless
 
-# vithout UI
+# without UI
 #driver = webdriver.Firefox(executable_path="D:\\Frondage\\start\\geckodriver-v0.24.0-win64\\geckodriver.exe", options=opts)
 # with UI
 driver = webdriver.Firefox(executable_path="D:\\Frondage\\start\\geckodriver-v0.24.0-win64\\geckodriver.exe")
