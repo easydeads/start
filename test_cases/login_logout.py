@@ -10,7 +10,7 @@ assert login_title in driver.title
 driver.find_element_by_xpath(login_email).send_keys("alpha_draw@yopmail.com")
 driver.find_element_by_xpath(login_password).send_keys("!Test123")
 driver.find_element_by_xpath(login_button).click()
-print(str(driver.title))
+print("My workspace title: " + str(driver.title))
 assert my_workspace_title in driver.title
 
 driver.find_element_by_xpath(my_workspace_menu).click()

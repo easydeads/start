@@ -1,1 +1,5 @@
+.gitignore
 *.log
+credentials.json
+token.pickle
+config.py
