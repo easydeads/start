@@ -34,6 +34,14 @@ def find_copy(where_is):
     return elem_data
 
 def get_image_src(from_url, title, pict_xpath):
+    """
+    must be upgraded to accept list as input
+
+    :param from_url:
+    :param title:
+    :param pict_xpath:
+    :return:
+    """
     go_to(from_url, title)
     # get image source
 
