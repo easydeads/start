@@ -1,4 +1,4 @@
-from selenium import webdriver
+"""from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 
 
@@ -28,13 +28,13 @@ def searh_check(responce_text):
   search_field.click()
   search_field.send_keys(responce_text)
 
-
+"""
 """
 driver.find_element_by_xpath('id("projectsDropzone10261")/a[@class="btn btn-green create"]')
 driver.get('https://frondage.com/logout')
 driver.close()
 driver.quit()
-"""
+
 
 frondage = 'https://frondage.com/login'
 frondage_title = "Frondage  - Sign In"
@@ -48,3 +48,4 @@ getnada_title = ""
 
 get_page(frondage, frondage_title)
 log_in(frondage_name, frondage_passkey)
+"""

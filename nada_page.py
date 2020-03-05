@@ -33,7 +33,10 @@ def find_copy(where_is):
     print("Finded email now: " + str(elem_data))
     return elem_data
 
-def get_image_src(from_url, title, pict_xpath):
+# проблема возника при извлечении адреса для контента на странице с собаками.
+# див в котором находится контент не статичен и меняется в зависимочти от типа контента
+def get_image_src(from_url, title, *args):
+    """инструкци"""
     """
     must be upgraded to accept list as input
 
@@ -44,10 +47,12 @@ def get_image_src(from_url, title, pict_xpath):
     """
     go_to(from_url, title)
     # get image source
+    for i in args:
+        print("i =", str(i))
+        img = driver.find_element_by_xpath(str(i))
+        print("img is: ", str(img))
+        src = str(img.get_attribute('src'))
 
-    img = driver.find_element_by_xpath(pict_xpath)
-    #print("img is: ", str(img))
-    src = str(img.get_attribute('src'))
 
     """if type(src) != 'str':
         src = img.get_attribute('url')
@@ -174,9 +179,8 @@ cat_xpath = "//img[@id='cat']"
     #dog resources
 dog_url = "https://random.dog/"
 dog_title = "random.dog"
-dog_xpath = "//img[@id='dog-img']"
-dog_xpath_vid = "/html/body/div/div/div/video/source"
-dog_xpath_vid_alt = "//video[@id='dog-img']//source"
+dog_xpath = ['//*[@id="dog-img"]', '/html/body/div/div/div/video/source']
+
 
     #fox resources
 fox_url = "https://randomfox.ca/"
@@ -192,7 +196,7 @@ mail_addr_yop = "send_image"
 mail_get_button = "//input[@class='sbut']"
 
 to = "vudajo@getnada.com"
-sender = "teodore.lubimov@gmail.com"
+sender = "mail address"
 subject = "subject test1"
 msgHtml = r'Hi<br/>Html <b>hello</b>'
 msgPlain = "Hi\nPlain Email"
@@ -206,10 +210,11 @@ message_text = "this is message text"
 #run start here
 #get cat image, linck for sending
 from time import sleep
-i=5
-while i > 0:
+
+while True:
     #cat = get_image_src(cat_url, cat_title, cat_xpath)
-    dog = get_image_src(dog_url, dog_title, dog_xpath)
+    dog = get_image_src(dog_url, dog_title, *dog_xpath)
+
     #fox = get_image_src(fox_url, fox_title, fox_xpath)
     #msg = str(cat), str(dog), str(fox)
     print(str(dog))
@@ -220,7 +225,5 @@ while i > 0:
     find_copy(element)
 """
     #driver.close()
-    i-=1
-    print(i)
     sleep(1)
 driver.close()
