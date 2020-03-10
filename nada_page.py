@@ -21,7 +21,6 @@ def go_to(addr, title="Not have"):
         print("Title not have")
     elif title != "Not have" and type(title) != 'list':
         list_title = title.split()
-        print("Visited: " + str(list_title[0]))
         assert list_title[0] in driver.title
     else:
         assert title.split() in driver.title
@@ -35,11 +34,9 @@ def find_copy(where_is):
 
 # проблема возника при извлечении адреса для контента на странице с собаками.
 # див в котором находится контент не статичен и меняется в зависимочти от типа контента
-def get_image_src(from_url, title, *args):
-    """инструкци"""
+def get_image_src(from_url, title, x_path):
+    """x_path take as input string or list max from two elements if x_path not static"""
     """
-    must be upgraded to accept list as input
-
     :param from_url:
     :param title:
     :param pict_xpath:
@@ -47,12 +44,18 @@ def get_image_src(from_url, title, *args):
     """
     go_to(from_url, title)
     # get image source
-    for i in args:
-        print("i =", str(i))
-        img = driver.find_element_by_xpath(str(i))
-        print("img is: ", str(img))
+    if type(x_path) == list:
+        try:
+            img = driver.find_element_by_xpath(x_path[0])
+            src = str(img.get_attribute('src'))
+        except:
+            img = driver.find_element_by_xpath(x_path[1])
+            src = str(img.get_attribute('src'))
+    elif type(x_path) == str:
+        img = driver.find_element_by_xpath(x_path)
         src = str(img.get_attribute('src'))
-
+    else:
+        print("Unknown type")
 
     """if type(src) != 'str':
         src = img.get_attribute('url')
@@ -158,9 +161,7 @@ def send_email(subject, msg, to):
 """
 написать функцию для открытия новой вкладки с 'ёпмейл'
 написать письмо с полоченным ссылками и отправить на адрес в гетнада
-
 обновить страницу гетнада (при необходимости) и проверить что ссылки соответствубт отправленным
-
 кликом в ссылки открыть пикчи и сделать скрины открытых страниц/вкладок
 """
 
@@ -179,8 +180,7 @@ cat_xpath = "//img[@id='cat']"
     #dog resources
 dog_url = "https://random.dog/"
 dog_title = "random.dog"
-dog_xpath = ['//*[@id="dog-img"]', '/html/body/div/div/div/video/source']
-
+dog_xpath = ["//img[@id='dog-img']", '/html/body/div/div/div/video/source']
 
     #fox resources
 fox_url = "https://randomfox.ca/"
@@ -194,6 +194,9 @@ title_start_yop = "YOPmail - Disposable Email Address"
 mail_field = "login"
 mail_addr_yop = "send_image"
 mail_get_button = "//input[@class='sbut']"
+new_mail = "//a[@id='wrmail']"
+mailto = "//input[@id='mailto']"
+mail_title = "//input[@id='mailsu']"
 
 to = "vudajo@getnada.com"
 sender = "mail address"
@@ -202,20 +205,18 @@ msgHtml = r'Hi<br/>Html <b>hello</b>'
 msgPlain = "Hi\nPlain Email"
 message_text = "this is message text"
 
-
-
-
 #------ VARIABLES finish---------
+
+
 
 #run start here
 #get cat image, linck for sending
 from time import sleep
 
 while True:
-    #cat = get_image_src(cat_url, cat_title, cat_xpath)
-    dog = get_image_src(dog_url, dog_title, *dog_xpath)
-
-    #fox = get_image_src(fox_url, fox_title, fox_xpath)
+    cat = get_image_src(cat_url, cat_title, cat_xpath)
+    dog = get_image_src(dog_url, dog_title, dog_xpath)
+    fox = get_image_src(fox_url, fox_title, fox_xpath)
     #msg = str(cat), str(dog), str(fox)
     print(str(dog))
 
