@@ -25,15 +25,18 @@ def go_to(addr, title="Not have"):
   else:
     assert title.split() in driver.title
 
-def find_copy(where_is):
-  elem = driver.find_element_by_xpath(where_is)
+def find_copy(where_url, title, what):
+  """
+  :param where_is:
+  :return:
+  """
+  go_to(where_url, title)
+  elem = driver.find_element_by_xpath(what)
   elem_data = elem.text
   #add to verification by RegExp
   print("Finded email now: " + str(elem_data))
   return elem_data
 
-# проблема возника при извлечении адреса для контента на странице с собаками.
-# див в котором находится контент не статичен и меняется в зависимочти от типа контента
 def get_image_src(from_url, title, x_path):
   """x_path take as input string or list max from two elements if x_path not static"""
   """
@@ -66,15 +69,29 @@ def get_image_src(from_url, title, x_path):
   print("src is: " + str(src))
   return src
 
+def src_from_api(url):
+  """
+  :param url:
+  :return: as example
+{'image': 'http://randomfox.ca/images/32.jpg', 'link': 'http://randomfox.ca/?i=32'}
+{'fileSizeBytes': 1199392, 'url': 'https://random.dog/cb06ca7a-b464-426f-ba51-e4014f537cb0.mp4'}
+{'file': 'https://purr.objects-us-east-1.dream.io/i/4FXOM.jpg'}
+  """
+  responce = requests.get(url)
+  data = responce.json()
+  for i in data:
+    for n in key_names:
+      if n == i:
+        print("Link:", data[i])
+        return data[i]
+      else:
+        print("Not have")
+"""
 def save_screen():
   driver.save_screenshot(img.get_attribute('src').split("/")[-1], )
   print("Saved screen: " + str(img.get_attribute('src').split("/")[-1]))
 
-  # download the image
-  #urllib.urlretrieve(src, title)
-
-  # take screenshot
-
+"""
 def open_mailbox(url, title, login, input_text, button):
   go_to(url, title)
   mail_form = driver.find_element_by_id(login).send_keys(input_text)
@@ -157,35 +174,3 @@ def send_email(subject, msg, to):
     print("Success: Email sent!")
   except:
     print("Email failed to send")
-
-def src_from_api(url):
-  """
-  :param url:
-  :return: as example
-{'image': 'http://randomfox.ca/images/32.jpg', 'link': 'http://randomfox.ca/?i=32'}
-{'fileSizeBytes': 1199392, 'url': 'https://random.dog/cb06ca7a-b464-426f-ba51-e4014f537cb0.mp4'}
-{'file': 'https://purr.objects-us-east-1.dream.io/i/4FXOM.jpg'}
-  """
-  responce = requests.get(url)
-  data = responce.json()
-  for i in data:
-    for n in key_names:
-      if n == i:
-        return data[i]
-      else:
-        print(data[i], "Not have")
-
-#run start here
-#get cat image, linck for sending
-from time import sleep
-
-for i in all_data:
-  src_from_api(i)
-
-"""send_email("Take this pictures", msg, to)
-    #get email for sending and ferification
-    go_to(url_nada, title_nada)
-    find_copy(element)
-"""
-#driver.close()
-driver.close()

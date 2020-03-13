@@ -3,7 +3,6 @@
 url_nada = "https://getnada.com"
 title_nada = "Nada - temp mail - fast and free"
 element = "/html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div[1]/h1[1]/span[2]"
-fox_image = ("https://randomfox.ca/images/")
 
 #cat resources
 cat_url = "https://random.cat/"
